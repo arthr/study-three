@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Stats from "three/addons/libs/stats.module.js";
 import GUI from "lil-gui";
-import { Terrain } from "./terrain";
+import { World } from "./world";
 
 const gui = new GUI();
 
@@ -38,8 +38,8 @@ camera.position.set(10, 2, 10);
 const controls = new OrbitControls(camera, renderer.domElement);
 
 // Adiciona um terreno à cena
-const terrain = new Terrain(10, 10, 10);
-scene.add(terrain);
+const world = new World(10, 10);
+scene.add(world);
 
 // Cria uma luz direcional branca
 const sun = new THREE.DirectionalLight(0xffffff, 1);
@@ -77,11 +77,10 @@ window.addEventListener("resize", () => {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-const terrainFolder = gui.addFolder("Terrain");
-terrainFolder.add(terrain, "width", 1, 20, 1).name("Width");
-terrainFolder.add(terrain, "height", 1, 20, 1).name("Height");
-terrainFolder.addColor(terrain.terrain.material, "color").name("Color");
-terrainFolder.add(terrain.material, "wireframe").name("Wireframe");
+const terrainFolder = gui.addFolder("World");
+terrainFolder.add(world, "width", 1, 20, 1).name("Width");
+terrainFolder.add(world, "height", 1, 20, 1).name("Height");
+terrainFolder.addColor(world.terrain.material, "color").name("Color");
 terrainFolder.onChange(() => {
-	terrain.createTerrain();
+	world.createTerrain();
 });
