@@ -69,7 +69,7 @@ export class World extends THREE.Mesh {
 
 	createTerrain() {
 		const terrainMaterial = new THREE.MeshStandardMaterial({
-			color: 0xc2b280, // Cor do chão do Papa-Leguas
+			color: 0xc2b280,
 			wireframe: false,
 		});
 		const terrainGeometry = new THREE.PlaneGeometry(
@@ -90,7 +90,7 @@ export class World extends THREE.Mesh {
 
 		const treeGeometry = new THREE.ConeGeometry(treeRadius, treeHeight, 8);
 		const treeMaterial = new THREE.MeshStandardMaterial({
-			color: 0x228b22, // Cor verde de pinheiro
+			color: 0x228b22,
 			flatShading: true,
 		});
 
@@ -101,7 +101,6 @@ export class World extends THREE.Mesh {
 				Math.floor(this.height * Math.random()) + 0.5
 			);
 
-			// Verifica se já existe um objeto na mesma posição
 			if (this.#objectMap.has(`${coords.x}-${coords.y}`)) {
 				continue;
 			}
@@ -124,7 +123,7 @@ export class World extends THREE.Mesh {
 		const maxRockHeight = 0.8;
 
 		const rockMaterial = new THREE.MeshStandardMaterial({
-			color: 0x808080, // Cor cinza
+			color: 0x808080,
 			flatShading: true,
 		});
 
@@ -142,7 +141,6 @@ export class World extends THREE.Mesh {
 				Math.floor(this.height * Math.random()) + 0.5
 			);
 
-			// Verifica se já existe um objeto na mesma posição
 			if (this.#objectMap.has(`${coords.x}-${coords.y}`)) {
 				continue;
 			}
@@ -160,7 +158,7 @@ export class World extends THREE.Mesh {
 		const maxBushRadius = 0.3;
 
 		const bushMaterial = new THREE.MeshStandardMaterial({
-			color: 0x32cd32, // Cor verde claro
+			color: 0x32cd32,
 			flatShading: true,
 		});
 
@@ -176,7 +174,6 @@ export class World extends THREE.Mesh {
 				Math.floor(this.height * Math.random()) + 0.5
 			);
 
-			// Verifica se já existe um objeto na mesma posição
 			if (this.#objectMap.has(`${coords.x}-${coords.y}`)) {
 				continue;
 			}
