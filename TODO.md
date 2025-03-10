@@ -3,7 +3,7 @@
 - [ ] World
   - [x] Terrain - Flat plane
   - [x] Trees
-  - [ ] Rocks
+  - [x] Rocks
   - [ ] Bushes
   - [ ] Prevent trees/rocks/bushes from intersecting each other
   - [ ] Add controls to UI for world

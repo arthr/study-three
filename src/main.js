@@ -81,7 +81,7 @@ const terrainFolder = gui.addFolder("Terrain");
 terrainFolder.add(terrain, "width", 1, 20, 1).name("Width");
 terrainFolder.add(terrain, "height", 1, 20, 1).name("Height");
 terrainFolder.addColor(terrain.terrain.material, "color").name("Color");
-terrainFolder.add(terrain.terrain.material, "wireframe").name("Wireframe");
+terrainFolder.add(terrain.material, "wireframe").name("Wireframe");
 terrainFolder.onChange(() => {
 	terrain.createTerrain();
 });
