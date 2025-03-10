@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Stats from "three/addons/libs/stats.module.js";
 import GUI from "lil-gui";
+import { Terrain } from "./terrain";
 
 const gui = new GUI();
 
@@ -31,30 +32,24 @@ const camera = new THREE.PerspectiveCamera(
 	0.1,
 	1000
 );
+camera.position.set(10, 2, 10);
 
 // Adiciona controles de órbita à câmera
 const controls = new OrbitControls(camera, renderer.domElement);
 
+// Adiciona um terreno à cena
+const terrain = new Terrain(10, 10, 10);
+scene.add(terrain);
+
 // Cria uma luz direcional branca
 const sun = new THREE.DirectionalLight(0xffffff, 1);
 sun.position.set(1, 2, 3);
+sun.intensity = 2;
 scene.add(sun);
 
 // Cria uma luz ambiente branca
 const ambient = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambient);
-
-// Cria a geometria de um cubo
-const geometry = new THREE.BoxGeometry(1);
-
-// Cria um material básico de malha com a cor verde
-const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-
-// Cria uma malha combinando a geometria e o material
-const cube = new THREE.Mesh(geometry, material);
-
-// Adiciona o cubo à cena
-scene.add(cube);
 
 // Define a posição da câmera no eixo Z
 camera.position.z = 5;
@@ -82,8 +77,11 @@ window.addEventListener("resize", () => {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-const folder = gui.addFolder("Cube");
-folder.add(cube.position, "x", -2, 2).name("Position X");
-folder.addColor(material, "color").name("Color");
-folder.add(material, "wireframe").name("Wireframe");
-folder.open();
+const terrainFolder = gui.addFolder("Terrain");
+terrainFolder.add(terrain, "width", 1, 20, 1).name("Width");
+terrainFolder.add(terrain, "height", 1, 20, 1).name("Height");
+terrainFolder.addColor(terrain.terrain.material, "color").name("Color");
+terrainFolder.add(terrain.terrain.material, "wireframe").name("Wireframe");
+terrainFolder.onChange(() => {
+	terrain.createTerrain();
+});

@@ -1,0 +1,54 @@
+# To Do List
+
+- [ ] World
+  - [x] Terrain - Flat plane
+  - [x] Trees
+  - [ ] Rocks
+  - [ ] Bushes
+  - [ ] Prevent trees/rocks/bushes from intersecting each other
+  - [ ] Add controls to UI for world
+- [ ] Player Character
+  - [ ] Draw character on the screen
+  - [ ] Point and click controls
+  - [ ] Navigation (without obstacles)
+    - [ ] Dijkstra's algorithm
+    - [ ] A\* algorithm
+    - [ ] world -> get(x, z)
+  - [ ] Improved Navigation (obstacle avoidance)
+- [ ] Actions
+  - [ ] Refactoring / Reorganization
+  - [ ] Implementing the base framework
+  - [ ] GameObject
+    - [ ] Player (Human/Computer Player)
+    - [ ] Trees / Rocks / Bushes
+  - [ ] Implementing the base Action class
+    - [ ] MovementAction
+  - [ ] Asynchronous Input
+    - [ ] Selecting a target square
+  - [ ] Combat Manager
+    - [ ] Iterate through all the players
+    - [ ] Request an action from each player
+- [ ] Combat
+  - [ ] Action
+    - [ ] MeleeAttackAction
+    - [ ] RangedAttackAction
+    - [ ] WaitAction
+  - [ ] Enemies
+    - [ ] Hit Points
+    - [ ] Remove the enemies when they are killed
+  - [ ] Pathfinding
+    - [ ] Don't allow players to move through other players
+  - [ ] Asynchronous Input
+    - [ ] Selecting a target object
+  - [ ] Add some UI
+    - [ ] List out actions for the active player
+    - [ ] Status bar
+    - [ ] Display player/object hit points above their head
+- [ ] Graphics Overhaul
+  - [ ] 3D assets for the props
+  - [ ] Improved terrain (perlin noise? hills? water?)
+  - [ ] 3D assets for the player models
+  - [ ] Skybox
+  - [ ] Fog
+- [ ] Player Animation
+- [ ] Enemy AI
