@@ -4,7 +4,7 @@
   - [x] Terrain - Flat plane
   - [x] Trees
   - [x] Rocks
-  - [ ] Bushes
+  - [x] Bushes
   - [ ] Prevent trees/rocks/bushes from intersecting each other
   - [ ] Add controls to UI for world
 - [ ] Player Character

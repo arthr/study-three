@@ -6,11 +6,15 @@ export class Terrain extends THREE.Mesh {
 
 		this.width = width;
 		this.height = height;
+
 		this.treeCount = 10;
 		this.rockCount = 20;
+		this.bushCount = 10;
+
 		this.createTerrain();
 		this.createTrees();
 		this.createRocks();
+		this.createBushes();
 	}
 
 	createTerrain() {
@@ -21,7 +25,7 @@ export class Terrain extends THREE.Mesh {
 		}
 
 		const terrainMaterial = new THREE.MeshStandardMaterial({
-			color: 0x00ff00,
+			color: 0xc2b280, // Road Runner ground color
 			wireframe: false,
 		});
 		const terrainGeometry = new THREE.PlaneGeometry(
@@ -89,6 +93,34 @@ export class Terrain extends THREE.Mesh {
 			);
 			rockMesh.scale.y = height;
 			this.rocks.add(rockMesh);
+		}
+	}
+
+	createBushes() {
+		const minBushRadius = 0.1;
+		const maxBushRadius = 0.3;
+
+		const bushMaterial = new THREE.MeshStandardMaterial({
+			color: 0x32cd32, // Light green color
+			flatShading: true,
+		});
+
+		this.bushes = new THREE.Group();
+		this.add(this.bushes);
+
+		for (let i = 0; i < this.bushCount; i++) {
+			const radius =
+				Math.random() * (maxBushRadius - minBushRadius) + minBushRadius;
+
+			const bushGeometry = new THREE.SphereGeometry(radius, 6, 5);
+			const bushMesh = new THREE.Mesh(bushGeometry, bushMaterial);
+			bushMesh.position.set(
+				Math.floor(this.width * Math.random()) + 0.5,
+				0,
+				Math.floor(this.height * Math.random()) + 0.5
+			);
+
+			this.bushes.add(bushMesh);
 		}
 	}
 }
