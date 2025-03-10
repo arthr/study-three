@@ -29,7 +29,7 @@ export class World extends THREE.Mesh {
 		}
 
 		const terrainMaterial = new THREE.MeshStandardMaterial({
-			color: 0xc2b280, // Road Runner ground color
+			color: 0xc2b280, // Cor do chão do Papa-Leguas
 			wireframe: false,
 		});
 		const terrainGeometry = new THREE.PlaneGeometry(
@@ -50,7 +50,7 @@ export class World extends THREE.Mesh {
 
 		const treeGeometry = new THREE.ConeGeometry(treeRadius, treeHeight, 8);
 		const treeMaterial = new THREE.MeshStandardMaterial({
-			color: 0x228b22, // Pine tree green color
+			color: 0x228b22, // Cor verde de pinheiro
 			flatShading: true,
 		});
 
@@ -64,7 +64,7 @@ export class World extends THREE.Mesh {
 				Math.floor(this.height * Math.random()) + 0.5
 			);
 
-			// Check if there is already an object at the same position
+			// Verifica se já existe um objeto na mesma posição
 			if (this.#objectMap.has(`${coords.x}-${coords.y}`)) {
 				continue;
 			}
@@ -87,7 +87,7 @@ export class World extends THREE.Mesh {
 		const maxRockHeight = 0.8;
 
 		const rockMaterial = new THREE.MeshStandardMaterial({
-			color: 0x808080, // Gray color
+			color: 0x808080, // Cor cinza
 			flatShading: true,
 		});
 
@@ -108,7 +108,7 @@ export class World extends THREE.Mesh {
 				Math.floor(this.height * Math.random()) + 0.5
 			);
 
-			// Check if there is already an object at the same position
+			// Verifica se já existe um objeto na mesma posição
 			if (this.#objectMap.has(`${coords.x}-${coords.y}`)) {
 				continue;
 			}
@@ -126,7 +126,7 @@ export class World extends THREE.Mesh {
 		const maxBushRadius = 0.3;
 
 		const bushMaterial = new THREE.MeshStandardMaterial({
-			color: 0x32cd32, // Light green color
+			color: 0x32cd32, // Cor verde claro
 			flatShading: true,
 		});
 
@@ -145,7 +145,7 @@ export class World extends THREE.Mesh {
 				Math.floor(this.height * Math.random()) + 0.5
 			);
 
-			// Check if there is already an object at the same position
+			// Verifica se já existe um objeto na mesma posição
 			if (this.#objectMap.has(`${coords.x}-${coords.y}`)) {
 				continue;
 			}
