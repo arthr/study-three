@@ -13,21 +13,61 @@ export class World extends THREE.Mesh {
 		this.rockCount = 20;
 		this.bushCount = 10;
 
+		this.trees = new THREE.Group();
+		this.add(this.trees);
+
+		this.rocks = new THREE.Group();
+		this.add(this.rocks);
+
+		this.bushes = new THREE.Group();
+		this.add(this.bushes);
+
+		this.generate();
+	}
+
+	generate() {
+		this.clear();
 		this.createTerrain();
 		this.createTrees();
 		this.createRocks();
 		this.createBushes();
-
-		console.log(this.#objectMap);
 	}
 
-	createTerrain() {
+	clear() {
 		if (this.terrain) {
 			this.terrain.geometry.dispose();
 			this.terrain.material.dispose();
 			this.remove(this.terrain);
 		}
 
+		if (this.trees) {
+			this.trees.children.forEach((tree) => {
+				tree.geometry.dispose();
+				tree.material.dispose();
+			});
+			this.trees.clear();
+		}
+
+		if (this.rocks) {
+			this.rocks.children.forEach((rock) => {
+				rock.geometry.dispose();
+				rock.material.dispose();
+			});
+			this.rocks.clear();
+		}
+
+		if (this.bushes) {
+			this.bushes.children.forEach((bush) => {
+				bush.geometry.dispose();
+				bush.material.dispose();
+			});
+			this.bushes.clear();
+		}
+
+		this.#objectMap.clear();
+	}
+
+	createTerrain() {
 		const terrainMaterial = new THREE.MeshStandardMaterial({
 			color: 0xc2b280, // Cor do chão do Papa-Leguas
 			wireframe: false,
@@ -53,9 +93,6 @@ export class World extends THREE.Mesh {
 			color: 0x228b22, // Cor verde de pinheiro
 			flatShading: true,
 		});
-
-		this.trees = new THREE.Group();
-		this.add(this.trees);
 
 		for (let i = 0; i < this.treeCount; i++) {
 			const treeMesh = new THREE.Mesh(treeGeometry, treeMaterial);
@@ -90,9 +127,6 @@ export class World extends THREE.Mesh {
 			color: 0x808080, // Cor cinza
 			flatShading: true,
 		});
-
-		this.rocks = new THREE.Group();
-		this.add(this.rocks);
 
 		for (let i = 0; i < this.rockCount; i++) {
 			const radius =
@@ -129,9 +163,6 @@ export class World extends THREE.Mesh {
 			color: 0x32cd32, // Cor verde claro
 			flatShading: true,
 		});
-
-		this.bushes = new THREE.Group();
-		this.add(this.bushes);
 
 		for (let i = 0; i < this.bushCount; i++) {
 			const radius =
