@@ -19,6 +19,7 @@ dist/
 .vscode/
 *.sublime-project
 *.sublime-workspace
+settings.jsonc
 
 # OS generated files
 .DS_Store
