@@ -3,18 +3,17 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Stats from "three/addons/libs/stats.module.js";
 import GUI from "lil-gui";
 import { World } from "./world";
+import { Player } from "./player";
 
 const gui = new GUI();
 
 const stats = new Stats();
-stats.showPanel(0);
 document.body.appendChild(stats.dom);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-
 renderer.setAnimationLoop(animate);
-
+renderer.setPixelRatio(devicePixelRatio);
 document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
@@ -25,12 +24,17 @@ const camera = new THREE.PerspectiveCamera(
 	0.1,
 	1000
 );
-camera.position.set(10, 2, 10);
 
 const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(5, 0, 5);
+camera.position.set(0, 2, 0);
+controls.update();
 
 const world = new World(10, 10);
 scene.add(world);
+
+const player = new Player(camera, world.terrain);
+scene.add(player);
 
 const sun = new THREE.DirectionalLight(0xffffff, 1);
 sun.position.set(1, 2, 3);
