@@ -33,7 +33,7 @@ controls.update();
 const world = new World(10, 10);
 scene.add(world);
 
-const player = new Player(camera, world.terrain);
+const player = new Player(camera, world);
 scene.add(player);
 
 const sun = new THREE.DirectionalLight(0xffffff, 1);

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { search } from "./pathfinding";
 
 export class Player extends THREE.Mesh {
 	/**
@@ -6,7 +7,7 @@ export class Player extends THREE.Mesh {
 	 */
 	raycaster = new THREE.Raycaster();
 
-	constructor(camera, terrain) {
+	constructor(camera, world) {
 		super();
 
 		this.geometry = new THREE.CapsuleGeometry(0.25, 0.5);
@@ -14,7 +15,7 @@ export class Player extends THREE.Mesh {
 		this.position.set(5.5, 0.5, 5.5);
 
 		this.camera = camera;
-		this.terrain = terrain;
+		this.world = world;
 		window.addEventListener("mousedown", this.onMouseDown.bind(this));
 	}
 	/**
@@ -28,14 +29,24 @@ export class Player extends THREE.Mesh {
 		);
 
 		this.raycaster.setFromCamera(coords, this.camera);
+		const intersections = this.raycaster.intersectObject(
+			this.world.terrain
+		);
 
-		const intersections = this.raycaster.intersectObject(this.terrain);
 		if (intersections && intersections.length > 0) {
-			this.position.set(
-				Math.floor(intersections[0].point.x) + 0.5,
-				0.5,
-				Math.floor(intersections[0].point.z) + 0.5
+			const selectedCoords = new THREE.Vector2(
+				Math.floor(intersections[0].point.x),
+				Math.floor(intersections[0].point.z)
 			);
+
+			this.position.set(
+				selectedCoords.x + 0.5,
+				0.5,
+				selectedCoords.y + 0.5
+			);
+
+			search(selectedCoords, null, this.world);
+			console.log(selectedCoords);
 		}
 	}
 }

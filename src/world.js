@@ -127,22 +127,28 @@ export class World extends THREE.Group {
 		const treeRadius = 0.2;
 		const treeHeight = 1;
 
-		const treeGeometry = new THREE.ConeGeometry(treeRadius, treeHeight, 8);
 		const treeMaterial = new THREE.MeshStandardMaterial({
 			color: 0x228b22,
 			flatShading: true,
 		});
 
 		for (let i = 0; i < this.treeCount; i++) {
-			const treeMesh = new THREE.Mesh(treeGeometry, treeMaterial);
 			const coords = new THREE.Vector2(
-				Math.floor(this.width * Math.random()) + 0.5,
-				Math.floor(this.height * Math.random()) + 0.5
+				Math.floor(this.width * Math.random()),
+				Math.floor(this.height * Math.random())
 			);
 
-			if (this.#objectMap.has(this.getKey(coords))) {
-				continue;
-			}
+			if (this.#objectMap.has(this.getKey(coords))) continue;
+
+			const treeGeometry = new THREE.ConeGeometry(
+				treeRadius,
+				treeHeight,
+				8
+			);
+			const treeMesh = new THREE.Mesh(treeGeometry, treeMaterial);
+			treeMesh.name = `Tree #${String(i).padStart(3, "0")} (x:${
+				coords.x
+			}, y:${coords.y})`;
 
 			treeMesh.position.set(
 				coords.x + 0.5,
@@ -172,17 +178,18 @@ export class World extends THREE.Group {
 			const height =
 				Math.random() * (maxRockHeight - minRockHeight) + minRockHeight;
 
-			const rockGeometry = new THREE.SphereGeometry(radius, 6, 5);
-			const rockMesh = new THREE.Mesh(rockGeometry, rockMaterial);
-
 			const coords = new THREE.Vector2(
-				Math.floor(this.width * Math.random()) + 0.5,
-				Math.floor(this.height * Math.random()) + 0.5
+				Math.floor(this.width * Math.random()),
+				Math.floor(this.height * Math.random())
 			);
 
-			if (this.#objectMap.has(this.getKey(coords))) {
-				continue;
-			}
+			if (this.#objectMap.has(this.getKey(coords))) continue;
+
+			const rockGeometry = new THREE.SphereGeometry(radius, 6, 5);
+			const rockMesh = new THREE.Mesh(rockGeometry, rockMaterial);
+			rockMesh.name = `Rock #${String(i).padStart(3, "0")} (x:${
+				coords.x
+			}, y:${coords.y})`;
 
 			rockMesh.position.set(coords.x + 0.5, 0, coords.y + 0.5);
 			rockMesh.scale.y = height;
@@ -205,17 +212,18 @@ export class World extends THREE.Group {
 			const radius =
 				Math.random() * (maxBushRadius - minBushRadius) + minBushRadius;
 
-			const bushGeometry = new THREE.SphereGeometry(radius, 6, 5);
-			const bushMesh = new THREE.Mesh(bushGeometry, bushMaterial);
-
 			const coords = new THREE.Vector2(
-				Math.floor(this.width * Math.random()) + 0.5,
-				Math.floor(this.height * Math.random()) + 0.5
+				Math.floor(this.width * Math.random()),
+				Math.floor(this.height * Math.random())
 			);
 
-			if (this.#objectMap.has(this.getKey(coords))) {
-				continue;
-			}
+			if (this.#objectMap.has(this.getKey(coords))) continue;
+
+			const bushGeometry = new THREE.SphereGeometry(radius, 6, 5);
+			const bushMesh = new THREE.Mesh(bushGeometry, bushMaterial);
+			bushMesh.name = `Bush #${String(i).padStart(3, "0")} (x:${
+				coords.x
+			}, y:${coords.y})`;
 
 			bushMesh.position.set(coords.x + 0.5, radius, coords.y + 0.5);
 
