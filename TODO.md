@@ -1,20 +1,20 @@
 # To Do List
 
-- [ ] World
+- [x] World
   - [x] Terrain - Flat plane
   - [x] Trees
   - [x] Rocks
   - [x] Bushes
   - [x] Prevent trees/rocks/bushes from intersecting each other
   - [x] Add controls to UI for world
-- [ ] Player Character
+- [x] Player Character
   - [x] Draw character on the screen
   - [x] Point and click controls
-  - [ ] Navigation (without obstacles)
-    - [ ] Dijkstra's algorithm
-    - [ ] A\* algorithm
-    - [ ] world -> get(x, z)
-  - [ ] Improved Navigation (obstacle avoidance)
+  - [x] Navigation (without obstacles)
+    - [x] Dijkstra's algorithm
+    - [x] A\* algorithm
+    - [x] world -> get(x, z)
+  - [x] Improved Navigation (obstacle avoidance)
 - [ ] Actions
   - [ ] Refactoring / Reorganization
   - [ ] Implementing the base framework
