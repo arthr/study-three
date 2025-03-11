@@ -2,9 +2,23 @@ import * as THREE from "three";
 
 const textureLoader = new THREE.TextureLoader();
 const gridTexture = textureLoader.load("textures/grid.png");
+const gridTextureWire = textureLoader.load("textures/grid-wire.png");
 
 export class World extends THREE.Group {
 	#objectMap = new Map();
+
+	/**
+	 * Active/Deactive the wired texture.
+	 * @type {boolean}
+	 */
+	#textureWired = false;
+
+	/**
+	 * Returns a key for for the object map given the coordinates.
+	 * @param {THREE.Vector2} coords
+	 * @returns
+	 */
+	getKey = (coords) => `${coords.x}-${coords.y}`;
 
 	constructor(width, height) {
 		super();
@@ -26,6 +40,17 @@ export class World extends THREE.Group {
 		this.add(this.bushes);
 
 		this.generate();
+	}
+
+	get textureWired() {
+		return this.#textureWired;
+	}
+
+	set textureWired(value) {
+		this.#textureWired = value;
+		if (this.terrain) {
+			this.createTerrain();
+		}
 	}
 
 	generate() {
@@ -71,14 +96,19 @@ export class World extends THREE.Group {
 	}
 
 	createTerrain() {
-		gridTexture.repeat = new THREE.Vector2(this.width, this.height);
-		gridTexture.wrapS = THREE.RepeatWrapping;
-		gridTexture.wrapT = THREE.RepeatWrapping;
-		gridTexture.colorSpace = THREE.SRGBColorSpace;
+		// Seleciona a textura baseada no valor de textureWired
+		const currentTexture = this.textureWired
+			? gridTextureWire
+			: gridTexture;
+
+		currentTexture.repeat = new THREE.Vector2(this.width, this.height);
+		currentTexture.wrapS = THREE.RepeatWrapping;
+		currentTexture.wrapT = THREE.RepeatWrapping;
+		currentTexture.colorSpace = THREE.SRGBColorSpace;
 
 		const terrainMaterial = new THREE.MeshStandardMaterial({
-			map: gridTexture,
-			wireframe: true,
+			map: currentTexture,
+			wireframe: false,
 		});
 		const terrainGeometry = new THREE.PlaneGeometry(
 			this.width,
@@ -110,7 +140,7 @@ export class World extends THREE.Group {
 				Math.floor(this.height * Math.random()) + 0.5
 			);
 
-			if (this.#objectMap.has(`${coords.x}-${coords.y}`)) {
+			if (this.#objectMap.has(this.getKey(coords))) {
 				continue;
 			}
 
@@ -121,7 +151,7 @@ export class World extends THREE.Group {
 			);
 			this.trees.add(treeMesh);
 
-			this.#objectMap.set(`${coords.x}-${coords.y}`, treeMesh);
+			this.#objectMap.set(this.getKey(coords), treeMesh);
 		}
 	}
 
@@ -150,7 +180,7 @@ export class World extends THREE.Group {
 				Math.floor(this.height * Math.random()) + 0.5
 			);
 
-			if (this.#objectMap.has(`${coords.x}-${coords.y}`)) {
+			if (this.#objectMap.has(this.getKey(coords))) {
 				continue;
 			}
 
@@ -158,7 +188,7 @@ export class World extends THREE.Group {
 			rockMesh.scale.y = height;
 			this.rocks.add(rockMesh);
 
-			this.#objectMap.set(`${coords.x}-${coords.y}`, rockMesh);
+			this.#objectMap.set(this.getKey(coords), rockMesh);
 		}
 	}
 
@@ -183,7 +213,7 @@ export class World extends THREE.Group {
 				Math.floor(this.height * Math.random()) + 0.5
 			);
 
-			if (this.#objectMap.has(`${coords.x}-${coords.y}`)) {
+			if (this.#objectMap.has(this.getKey(coords))) {
 				continue;
 			}
 
@@ -191,7 +221,16 @@ export class World extends THREE.Group {
 
 			this.bushes.add(bushMesh);
 
-			this.#objectMap.set(`${coords.x}-${coords.y}`, bushMesh);
+			this.#objectMap.set(this.getKey(coords), bushMesh);
 		}
+	}
+
+	/**
+	 * Returns the object at the given coordinates or null if no object is found.
+	 * @param {THREE.Vector2} coords
+	 * @returns {object | null}
+	 */
+	getObject(coords) {
+		return this.#objectMap.get(this.getKey(coords)) ?? null;
 	}
 }
