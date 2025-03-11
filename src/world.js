@@ -11,7 +11,10 @@ export class World extends THREE.Group {
 	 * Active/Deactive the wired texture.
 	 * @type {boolean}
 	 */
-	#textureWired = false;
+	#textureWired = true;
+
+	// just for debugging
+	path = new THREE.Group();
 
 	/**
 	 * Returns a key for for the object map given the coordinates.
@@ -38,6 +41,9 @@ export class World extends THREE.Group {
 
 		this.bushes = new THREE.Group();
 		this.add(this.bushes);
+
+		this.path = new THREE.Group();
+		this.add(this.path);
 
 		this.generate();
 	}
