@@ -56,19 +56,27 @@ export class Player extends THREE.Mesh {
 			// If no path was found, return early
 			if (this.path == null || this.path.length === 0) return;
 
-			// DEBUG: Visualize the path
+			// Clear previous path visualization
 			this.world.path.clear();
-			this.path.forEach((coords) => {
-				const geometry = new THREE.BoxGeometry(0.2, 0.1, 0.2);
-				const material = new THREE.MeshStandardMaterial({
-					color: 0xffa500,
-					opacity: 0.9,
-					transparent: true,
+
+			// Only visualize the path if debug is enabled
+			if (
+				this.world.showPathDebug &&
+				this.path != null &&
+				this.path.length > 0
+			) {
+				this.path.forEach((coords) => {
+					const geometry = new THREE.BoxGeometry(0.2, 0.1, 0.2);
+					const material = new THREE.MeshStandardMaterial({
+						color: 0xffa500,
+						opacity: 0.9,
+						transparent: true,
+					});
+					const mesh = new THREE.Mesh(geometry, material);
+					mesh.position.set(coords.x + 0.5, 0.5, coords.y + 0.5);
+					this.world.path.add(mesh);
 				});
-				const mesh = new THREE.Mesh(geometry, material);
-				mesh.position.set(coords.x + 0.5, 0.5, coords.y + 0.5);
-				this.world.path.add(mesh);
-			});
+			}
 
 			// Trigger interval function to update player's position
 			this.pathIndex = 0;

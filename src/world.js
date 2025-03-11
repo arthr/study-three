@@ -13,6 +13,12 @@ export class World extends THREE.Group {
 	 */
 	#textureWired = true;
 
+	/**
+	 * Show/Hide path debug visualization.
+	 * @type {boolean}
+	 */
+	#showPathDebug = true;
+
 	// just for debugging
 	path = new THREE.Group();
 
@@ -56,6 +62,17 @@ export class World extends THREE.Group {
 		this.#textureWired = value;
 		if (this.terrain) {
 			this.createTerrain();
+		}
+	}
+
+	get showPathDebug() {
+		return this.#showPathDebug;
+	}
+
+	set showPathDebug(value) {
+		this.#showPathDebug = value;
+		if (!value) {
+			this.path.clear();
 		}
 	}
 
@@ -112,9 +129,12 @@ export class World extends THREE.Group {
 		currentTexture.wrapT = THREE.RepeatWrapping;
 		currentTexture.colorSpace = THREE.SRGBColorSpace;
 
+		// Preserva o valor atual do wireframe se o terreno já existe
+		const wireframeValue = this.terrain?.material?.wireframe || false;
+
 		const terrainMaterial = new THREE.MeshStandardMaterial({
 			map: currentTexture,
-			wireframe: false,
+			wireframe: wireframeValue,
 		});
 		const terrainGeometry = new THREE.PlaneGeometry(
 			this.width,
