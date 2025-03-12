@@ -20,6 +20,7 @@ dist/
 *.sublime-project
 *.sublime-workspace
 settings.jsonc
+.editorconfig
 
 # OS generated files
 .DS_Store

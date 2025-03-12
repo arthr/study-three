@@ -16,11 +16,11 @@
     - [x] world -> get(x, z)
   - [x] Improved Navigation (obstacle avoidance)
 - [ ] Actions
-  - [ ] Refactoring / Reorganization
-  - [ ] Implementing the base framework
-  - [ ] GameObject
-    - [ ] Player (Human/Computer Player)
-    - [ ] Trees / Rocks / Bushes
+  - [x] Refactoring / Reorganization
+  - [x] Implementing the base framework
+  - [x] GameObject
+    - [x] Player (Human/Computer Player)
+    - [x] Trees / Rocks / Bushes
   - [ ] Implementing the base Action class
     - [ ] MovementAction
   - [ ] Asynchronous Input

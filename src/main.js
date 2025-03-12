@@ -21,19 +21,35 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
 	75,
 	window.innerWidth / window.innerHeight,
-	0.1,
+	0.5,
 	1000
 );
 
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.target.set(5, 0, 5);
-camera.position.set(0, 2, 0);
+controls.target.set(5, -0.5, 5);
+camera.position.set(-1.15, 6.5, 5);
+
+// Movimento da câmera
+controls.enablePan = false;
+
+// Rotação da câmera
+controls.enableRotate = true;
+
+// Zoom da câmera
+controls.enableZoom = true;
+controls.maxDistance = 10;
+controls.minDistance = 5;
+
+// Suavização do movimento da câmera
+controls.enableDamping = true;
+controls.dampingFactor = 0.1;
+
 controls.update();
 
 const world = new World(10, 10);
 scene.add(world);
 
-const player = new Player(camera, world);
+const player = new Player(new THREE.Vector3(1, 0.5, 1), camera, world);
 scene.add(player);
 
 const sun = new THREE.DirectionalLight(0xffffff, 1);
