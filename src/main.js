@@ -3,7 +3,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Stats from "three/addons/libs/stats.module.js";
 import GUI from "lil-gui";
 import { World } from "./world";
-import { Player } from "./player";
+import { HumanPlayer } from "./players/HumanPlayer";
 
 const gui = new GUI();
 
@@ -49,7 +49,7 @@ controls.update();
 const world = new World(10, 10);
 scene.add(world);
 
-const player = new Player(new THREE.Vector3(1, 0.5, 1), camera, world);
+const player = new HumanPlayer(new THREE.Vector3(1, 0.5, 1), camera, world);
 scene.add(player);
 
 const sun = new THREE.DirectionalLight(0xffffff, 1);
@@ -87,3 +87,6 @@ worldFolder.add(world, "textureWired").name("Texture Wired");
 worldFolder.add(world, "showPathDebug").name("Show Path Debug");
 worldFolder.add(world.terrain.material, "wireframe").name("Wireframe");
 worldFolder.add(world, "generate").name("Generate");
+
+const action = await player.requestAction();
+await action.canPerform();

@@ -21,10 +21,10 @@
   - [x] GameObject
     - [x] Player (Human/Computer Player)
     - [x] Trees / Rocks / Bushes
-  - [ ] Implementing the base Action class
-    - [ ] MovementAction
+  - [x] Implementing the base Action class
+    - [x] MovementAction
   - [ ] Asynchronous Input
-    - [ ] Selecting a target square
+    - [x] Selecting a target square
   - [ ] Combat Manager
     - [ ] Iterate through all the players
     - [ ] Request an action from each player

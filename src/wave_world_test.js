@@ -4,6 +4,7 @@ import { GameObject } from "./objects/GameObject";
 import { Tree } from "./objects/Tree";
 import { Rock } from "./objects/Rock";
 import { getKey } from "./utils";
+import { ParametricGeometry } from "three/addons/geometries/ParametricGeometry.js";
 
 const textureLoader = new THREE.TextureLoader();
 const gridTexture = textureLoader.load("textures/grid.png");
@@ -115,17 +116,28 @@ export class World extends THREE.Group {
 			wireframe: wireframeValue,
 		});
 
-		const terrainGeometry = new THREE.PlaneGeometry(
-			this.width,
-			this.height,
-			this.width,
-			this.height
+		// Função paramétrica para gerar o terreno no plano horizontal (XZ)
+		const terrainFunction = (u, v, target) => {
+			const x = u * this.width;
+			const z = (1 - v) * this.height; // Invertendo V para corrigir a orientação
+
+			// Altura (y) baseada nas coordenadas x e z
+			const height = Math.sin(u * 5) * Math.cos(v * 5) * 0.5;
+
+			target.set(x, height, z);
+		};
+
+		// Usa ParametricGeometry para criar o terreno
+		const terrainGeometry = new ParametricGeometry(
+			terrainFunction,
+			this.width, // slices
+			this.height // stacks
 		);
 
 		this.terrain = new THREE.Mesh(terrainGeometry, terrainMaterial);
 		this.terrain.name = "Terrain";
-		this.terrain.rotation.x = -Math.PI / 2;
-		this.terrain.position.set(this.width / 2, 0, this.height / 2);
+
+		this.terrain.position.set(0, 0, 0);
 		this.add(this.terrain);
 	}
 
