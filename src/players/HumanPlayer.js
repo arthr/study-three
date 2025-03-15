@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Player } from "../player";
+import { Player } from "./Player";
 import { MovementAction } from "../actions/MovementAction";
 
 export class HumanPlayer extends Player {
@@ -21,7 +21,6 @@ export class HumanPlayer extends Player {
 			 * @param {MouseEvent} event
 			 */
 			const onMouseDown = (event) => {
-				console.log(event);
 				const coords = new THREE.Vector2(
 					(event.clientX / window.innerWidth) * 2 - 1,
 					-(event.clientY / window.innerHeight) * 2 + 1
@@ -39,16 +38,13 @@ export class HumanPlayer extends Player {
 						Math.floor(intersections[0].point.z)
 					);
 					console.log("Selected Coords: ", selectedCoords);
-					window.removeEventListener(
-						"mousedown",
-						onMouseDown.bind(this)
-					);
+					window.removeEventListener("mousedown", onMouseDown);
 					resolve(selectedCoords ? selectedCoords : null);
 				}
 			};
 
 			// Wait for the player to click on the window to select a square
-			window.addEventListener("mousedown", onMouseDown.bind(this));
+			window.addEventListener("mousedown", onMouseDown);
 			console.log("Waiting for player to select a square...");
 		});
 	}

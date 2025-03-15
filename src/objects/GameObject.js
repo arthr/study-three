@@ -15,4 +15,13 @@ export class GameObject extends THREE.Mesh {
 		super(geometry, material);
 		this.coords = coords;
 	}
+
+	/**
+	 * Moves the object to the specified coordinates
+	 * @param {THREE.Vector3} coords
+	 */
+	moveTo(coords) {
+		this.coords = coords;
+		this.position.set(this.coords.x + 0.5, 0.5, this.coords.z + 0.5);
+	}
 }

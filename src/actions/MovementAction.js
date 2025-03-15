@@ -1,6 +1,16 @@
+import * as THREE from "three";
 import { Action } from "./Action";
 import { search } from "../pathfinding";
 import { GameObject } from "../objects/GameObject";
+
+const breadcrumb = new THREE.Mesh(
+	new THREE.BoxGeometry(0.2, 0.1, 0.2),
+	new THREE.MeshStandardMaterial({
+		color: 0xffa500,
+		opacity: 0.9,
+		transparent: true,
+	})
+);
 
 export class MovementAction extends Action {
 	name = "MovementAction";
@@ -26,16 +36,19 @@ export class MovementAction extends Action {
 			this.path.length > 0
 		) {
 			this.path.forEach((coords, index) => {
-				const geometry = new THREE.BoxGeometry(0.2, 0.1, 0.2);
+				console.log(
+					`Path lenght: ${this.path.length}, index: ${index}`,
+					index === this.path.length - 1
+				);
 				let color = 0xffa500; // default color (orange)
 				if (index === 0) color = 0x0000ff; // start box (blue)
 				if (index === this.path.length - 1) color = 0xff0000; // end box (red)
-				const material = new THREE.MeshStandardMaterial({
-					color: color,
-					opacity: 0.9,
-					transparent: true,
-				});
-				const mesh = new THREE.Mesh(geometry, material);
+
+				const mesh = breadcrumb.clone();
+				// Criar uma cópia do material para cada breadcrumb
+				mesh.material = mesh.material.clone();
+				mesh.material.color.setHex(color);
+
 				mesh.position.set(coords.x + 0.5, 0.5, coords.z + 0.5);
 				this.world.path.add(mesh);
 			});
@@ -43,7 +56,7 @@ export class MovementAction extends Action {
 
 		// Trigger interval function to update player's position
 		this.pathIndex = 0;
-		this.pathUpdater = setInterval(this.updatePosition.bind(this), 500);
+		this.pathUpdater = setInterval(this.updatePosition.bind(this), 300);
 	}
 
 	async canPerform() {
@@ -62,9 +75,10 @@ export class MovementAction extends Action {
 	updatePosition() {
 		if (this.pathIndex === this.path.length) {
 			clearInterval(this.pathUpdater);
+			this.world.path.clear();
 			return;
 		}
 		const curr = this.path[this.pathIndex++];
-		this.moveTo(curr);
+		this.source.moveTo(curr);
 	}
 }

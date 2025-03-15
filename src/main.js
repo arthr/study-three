@@ -4,6 +4,7 @@ import Stats from "three/addons/libs/stats.module.js";
 import GUI from "lil-gui";
 import { World } from "./world";
 import { HumanPlayer } from "./players/HumanPlayer";
+import { CombatManager } from "./CombatManager";
 
 const gui = new GUI();
 
@@ -52,6 +53,10 @@ scene.add(world);
 const player = new HumanPlayer(new THREE.Vector3(1, 0.5, 1), camera, world);
 scene.add(player);
 
+const combatManager = new CombatManager();
+combatManager.addPlayer(player);
+//combatManager.takeTurns();
+
 const sun = new THREE.DirectionalLight(0xffffff, 1);
 sun.position.set(1, 2, 3);
 sun.intensity = 2;
@@ -89,4 +94,6 @@ worldFolder.add(world.terrain.material, "wireframe").name("Wireframe");
 worldFolder.add(world, "generate").name("Generate");
 
 const action = await player.requestAction();
-await action.canPerform();
+if (await action.canPerform()) {
+	await action.perform();
+}

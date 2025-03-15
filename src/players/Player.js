@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { GameObject } from "../objects/GameObject";
 import { World } from "../world";
 import { Action } from "../actions/Action";
-import { MovementAction } from "../actions/MovementAction";
 
 const geometry = new THREE.CapsuleGeometry(0.25, 0.5);
 const material = new THREE.MeshStandardMaterial({ color: 0x4040c0 });
@@ -21,20 +20,9 @@ export class Player extends GameObject {
 	 */
 	constructor(coords, camera, world) {
 		super(coords, geometry, material);
-
 		this.moveTo(coords);
-
 		this.camera = camera;
 		this.world = world;
-	}
-
-	/**
-	 * Moves the player to the specified coordinates
-	 * @param {THREE.Vector3} coords
-	 */
-	moveTo(coords) {
-		this.coords = coords;
-		this.position.set(this.coords.x + 0.5, 0.5, this.coords.z + 0.5);
 	}
 
 	/**

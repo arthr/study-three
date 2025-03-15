@@ -23,7 +23,7 @@
     - [x] Trees / Rocks / Bushes
   - [x] Implementing the base Action class
     - [x] MovementAction
-  - [ ] Asynchronous Input
+  - [x] Asynchronous Input
     - [x] Selecting a target square
   - [ ] Combat Manager
     - [ ] Iterate through all the players
