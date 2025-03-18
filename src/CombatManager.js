@@ -29,6 +29,7 @@ export class CombatManager {
 				do {
 					const action = await player.requestAction();
 					if (await action.canPerform()) {
+						// Wait for the player to finish their action
 						await action.perform();
 						actionPerformed = true;
 					} else {

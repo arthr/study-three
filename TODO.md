@@ -15,7 +15,7 @@
     - [x] A\* algorithm
     - [x] world -> get(x, z)
   - [x] Improved Navigation (obstacle avoidance)
-- [ ] Actions
+- [x] Actions
   - [x] Refactoring / Reorganization
   - [x] Implementing the base framework
   - [x] GameObject
@@ -25,9 +25,9 @@
     - [x] MovementAction
   - [x] Asynchronous Input
     - [x] Selecting a target square
-  - [ ] Combat Manager
-    - [ ] Iterate through all the players
-    - [ ] Request an action from each player
+  - [x] Combat Manager
+    - [x] Iterate through all the players
+    - [x] Request an action from each player
 - [ ] Combat
   - [ ] Action
     - [ ] MeleeAttackAction

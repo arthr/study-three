@@ -50,11 +50,15 @@ controls.update();
 const world = new World(10, 10);
 scene.add(world);
 
-const player = new HumanPlayer(new THREE.Vector3(1, 0.5, 1), camera, world);
-scene.add(player);
+const player1 = new HumanPlayer(new THREE.Vector3(1, 0.5, 1), camera, world);
+scene.add(player1);
+
+const player2 = new HumanPlayer(new THREE.Vector3(8, 0.5, 8), camera, world);
+scene.add(player2);
 
 const combatManager = new CombatManager();
-combatManager.addPlayer(player);
+combatManager.addPlayer(player1);
+combatManager.addPlayer(player2);
 
 const sun = new THREE.DirectionalLight(0xffffff, 1);
 sun.position.set(1, 2, 3);
