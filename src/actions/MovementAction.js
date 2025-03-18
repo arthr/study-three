@@ -28,35 +28,53 @@ export class MovementAction extends Action {
 	}
 
 	async perform() {
-		clearInterval(this.pathUpdater);
-		// Only visualize the path if debug is enabled
-		if (
-			this.world.showPathDebug &&
-			this.path != null &&
-			this.path.length > 0
-		) {
-			this.path.forEach((coords, index) => {
-				console.log(
-					`Path lenght: ${this.path.length}, index: ${index}`,
-					index === this.path.length - 1
-				);
-				let color = 0xffa500; // default color (orange)
-				if (index === 0) color = 0x0000ff; // start box (blue)
-				if (index === this.path.length - 1) color = 0xff0000; // end box (red)
+		return new Promise((resolve) => {
+			function updaterSourcePosition() {
+				// If the path is finished, clear the interval
+				if (this.pathIndex === this.path.length) {
+					clearInterval(this.pathUpdater);
+					this.world.path.clear();
+					resolve();
+					// Otherwise, move the player to the next position in the path
+				} else {
+					const curr = this.path[this.pathIndex++];
+					this.source.moveTo(curr);
+				}
+			}
 
-				const mesh = breadcrumb.clone();
-				// Criar uma cópia do material para cada breadcrumb
-				mesh.material = mesh.material.clone();
-				mesh.material.color.setHex(color);
+			clearInterval(this.pathUpdater);
+			// Only visualize the path if debug is enabled
+			if (
+				this.world.showPathDebug &&
+				this.path != null &&
+				this.path.length > 0
+			) {
+				this.path.forEach((coords, index) => {
+					console.log(
+						`Path lenght: ${this.path.length}, index: ${index}`,
+						index === this.path.length - 1
+					);
+					let color = 0xffa500; // default color (orange)
+					if (index === 0) color = 0x0000ff; // start box (blue)
+					if (index === this.path.length - 1) color = 0xff0000; // end box (red)
 
-				mesh.position.set(coords.x + 0.5, 0.5, coords.z + 0.5);
-				this.world.path.add(mesh);
-			});
-		}
+					const mesh = breadcrumb.clone();
+					// Criar uma cópia do material para cada breadcrumb
+					mesh.material = mesh.material.clone();
+					mesh.material.color.setHex(color);
 
-		// Trigger interval function to update player's position
-		this.pathIndex = 0;
-		this.pathUpdater = setInterval(this.updatePosition.bind(this), 300);
+					mesh.position.set(coords.x + 0.5, 0.5, coords.z + 0.5);
+					this.world.path.add(mesh);
+				});
+			}
+
+			// Trigger interval function to update player's position
+			this.pathIndex = 0;
+			this.pathUpdater = setInterval(
+				updaterSourcePosition.bind(this),
+				300
+			);
+		});
 	}
 
 	async canPerform() {
@@ -70,15 +88,5 @@ export class MovementAction extends Action {
 		console.log(this.path);
 		// If path is found, return true
 		return this.path !== null && this.path.length >= 0;
-	}
-
-	updatePosition() {
-		if (this.pathIndex === this.path.length) {
-			clearInterval(this.pathUpdater);
-			this.world.path.clear();
-			return;
-		}
-		const curr = this.path[this.pathIndex++];
-		this.source.moveTo(curr);
 	}
 }

@@ -38,13 +38,15 @@ export class HumanPlayer extends Player {
 						Math.floor(intersections[0].point.z)
 					);
 					console.log("Selected Coords: ", selectedCoords);
-					window.removeEventListener("mousedown", onMouseDown);
+					window.removeEventListener("mousedown", onMouseDownBound);
 					resolve(selectedCoords ? selectedCoords : null);
 				}
 			};
 
+			const onMouseDownBound = onMouseDown.bind(this);
+
 			// Wait for the player to click on the window to select a square
-			window.addEventListener("mousedown", onMouseDown);
+			window.addEventListener("mousedown", onMouseDownBound);
 			console.log("Waiting for player to select a square...");
 		});
 	}

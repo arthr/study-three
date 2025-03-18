@@ -28,7 +28,7 @@ export class CombatManager {
 				let actionPerformed = false;
 				do {
 					const action = await player.requestAction();
-					if (action.canPerform()) {
+					if (await action.canPerform()) {
 						await action.perform();
 						actionPerformed = true;
 					} else {

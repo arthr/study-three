@@ -55,7 +55,6 @@ scene.add(player);
 
 const combatManager = new CombatManager();
 combatManager.addPlayer(player);
-//combatManager.takeTurns();
 
 const sun = new THREE.DirectionalLight(0xffffff, 1);
 sun.position.set(1, 2, 3);
@@ -93,7 +92,4 @@ worldFolder.add(world, "showPathDebug").name("Show Path Debug");
 worldFolder.add(world.terrain.material, "wireframe").name("Wireframe");
 worldFolder.add(world, "generate").name("Generate");
 
-const action = await player.requestAction();
-if (await action.canPerform()) {
-	await action.perform();
-}
+combatManager.takeTurns();
