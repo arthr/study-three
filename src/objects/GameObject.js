@@ -14,6 +14,8 @@ export class GameObject extends THREE.Mesh {
 	constructor(coords, geometry, material) {
 		super(geometry, material);
 		this.coords = coords;
+		this.castShadow = true;
+		this.receiveShadow = true;
 	}
 
 	/**

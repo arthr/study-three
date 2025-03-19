@@ -2,14 +2,181 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>My first three.js app</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Three.js RPG Game</title>
 		<style>
-			body {
+			:root {
+				--ui-bg-color: rgba(0, 0, 0, 0.7);
+				--ui-text-color: rgba(255, 255, 255, 0.9);
+				--ui-accent-color: #4a9df8;
+				--ui-border-radius: 6px;
+				--ui-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+			}
+
+			* {
 				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				overflow: hidden;
+				font-family: var(--ui-font);
+				color: var(--ui-text-color);
+			}
+
+			/* Painéis de UI */
+			.ui-panel {
+				padding: 12px;
+				background-color: var(--ui-bg-color);
+				border-radius: var(--ui-border-radius);
+				backdrop-filter: blur(4px);
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				transition: all 0.3s ease;
+			}
+
+			/* Painel superior com informações do mundo */
+			#world-info {
+				position: absolute;
+				top: 15px;
+				left: 15px;
+				min-width: 180px;
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+			}
+
+			.info-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.info-label {
+				font-weight: 500;
+				color: var(--ui-accent-color);
+				font-size: 14px;
+			}
+
+			.info-value {
+				font-weight: 600;
+				font-size: 16px;
+				text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+			}
+
+			/* Painel inferior com controles e status */
+			#ui-bottom {
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				padding: 15px;
+				border-radius: 0;
+				border-bottom: none;
+			}
+
+			/* Status e logs */
+			#status-container {
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+				flex: 1;
+				margin-right: 15px;
+			}
+
+			#status-text p {
+				font-size: 14px;
+				opacity: 0.9;
+			}
+
+			/* Botões de ação */
+			#actions {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 8px;
+				justify-content: flex-end;
+			}
+
+			#actions button {
+				background-color: rgba(74, 157, 248, 0.2);
+				color: var(--ui-text-color);
+				border: 1px solid var(--ui-accent-color);
+				border-radius: var(--ui-border-radius);
+				padding: 8px 16px;
+				cursor: pointer;
+				font-family: var(--ui-font);
+				font-weight: 500;
+				transition: all 0.2s ease;
+				outline: none;
+				min-width: 80px;
+			}
+
+			#actions button:hover {
+				background-color: rgba(74, 157, 248, 0.4);
+				transform: translateY(-2px);
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+			}
+
+			#actions button:active {
+				transform: translateY(0);
+			}
+
+			/* Responsividade */
+			@media (max-width: 768px) {
+				#ui-bottom {
+					flex-direction: column;
+					gap: 15px;
+				}
+
+				#actions {
+					justify-content: center;
+					width: 100%;
+				}
+
+				#status-container {
+					width: 100%;
+					margin-right: 0;
+				}
+
+				#world-info {
+					right: 15px;
+					left: 15px;
+					top: 15px;
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<script type="module" src="src/main.js"></script>
+
+		<!-- Painel de informações do mundo (topo) -->
+		<div id="world-info" class="ui-panel">
+			<div class="info-row">
+				<span class="info-label">World Time:</span>
+				<span id="world-time" class="info-value">00:00</span>
+			</div>
+			<div class="info-row">
+				<span class="info-label">Season:</span>
+				<span id="world-season" class="info-value">Spring</span>
+			</div>
+		</div>
+
+		<!-- Painel de UI inferior -->
+		<div id="ui-bottom" class="ui-panel">
+			<div id="status-container">
+				<div id="status-text">
+					<p>Status: <span id="status">loading...</span></p>
+					<p>FPS: <span id="fps">0</span></p>
+				</div>
+			</div>
+			<div id="actions">
+				<button id="start">Start</button>
+				<button id="stop">Stop</button>
+			</div>
+		</div>
 	</body>
 </html>

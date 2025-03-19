@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { Player } from "./Player";
-import { MovementAction } from "../actions/MovementAction";
+import { Action } from "../actions";
 
 export class HumanPlayer extends Player {
 	name = "Human Player";
@@ -64,11 +64,41 @@ export class HumanPlayer extends Player {
 	 * @returns {Promise<Action | null>}
 	 */
 	async requestAction() {
-		console.log(`Player ${this.name} is requesting an action...`);
-		const selectedAction = new MovementAction(this, this.world);
-		console.log(
-			`Player ${this.name} selected action: ${selectedAction.name}`
-		);
-		return selectedAction;
+		const statusText = document.getElementById("status-text");
+		const actionButtonContainer = document.getElementById("actions");
+
+		actionButtonContainer.innerHTML = "";
+
+		const actions = this.getActions();
+
+		statusText.textContent = `Waiting for ${this.name} to select an action...`;
+		return new Promise((resolve) => {
+			/**
+			 * Event handler for click events on the action buttons
+			 * @param {MouseEvent} event
+			 */
+			const onActionClick = (event) => {
+				const actionName = event.target.textContent;
+				const action = actions.find((a) => a.name === actionName);
+				statusText.textContent = `${this.name} selected: ${action.name}`;
+				console.log(`${this.name} selected: ${action.name}`);
+				actionButtonContainer.innerHTML = "";
+				window.removeEventListener("click", onActionClickBound);
+				resolve(action);
+			};
+
+			const onActionClickBound = onActionClick.bind(this);
+
+			// Wait for the player to click on an action button
+			window.addEventListener("click", onActionClickBound);
+			statusText.textContent = `Waiting for ${this.name} to select an action...`;
+
+			// Display action buttons
+			actions.forEach((action) => {
+				const button = document.createElement("button");
+				button.textContent = action.name;
+				actionButtonContainer.appendChild(button);
+			});
+		});
 	}
 }

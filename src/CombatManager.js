@@ -1,10 +1,17 @@
 import { Player } from "./players/Player";
+import * as THREE from "three";
 
 export class CombatManager {
 	/**
 	 * @type {Player[]}
 	 */
 	players = [];
+
+	/**
+	 * Armazena os materiais originais dos jogadores
+	 * @type {Map<Player, THREE.Material>}
+	 */
+	originalMaterials = new Map();
 
 	constructor() {
 		this.actions = [];
@@ -26,6 +33,9 @@ export class CombatManager {
 		while (true) {
 			for (const player of this.players) {
 				let actionPerformed = false;
+
+				// highlight the player
+				player.highlight();
 				do {
 					const action = await player.requestAction();
 					if (await action.canPerform()) {
@@ -36,6 +46,9 @@ export class CombatManager {
 						console.log("Action cannot be performed");
 					}
 				} while (!actionPerformed);
+
+				// unhighlight the player
+				player.unhighlight();
 			}
 		}
 	}

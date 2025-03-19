@@ -28,6 +28,17 @@
   - [x] Combat Manager
     - [x] Iterate through all the players
     - [x] Request an action from each player
+- [x] Environmental System
+  - [x] Centralized environment management (EnvironmentManager)
+  - [x] Time system with day/night cycle
+  - [x] Dynamic celestial bodies (Sun and Moon)
+    - [x] Orbital trajectory with tilt
+    - [x] Proper shadow casting
+  - [x] Weather effects
+    - [x] Rain particles
+    - [x] Dynamic fog
+  - [x] Atmospheric changes based on time of day
+  - [x] Centralized world configuration (WorldConfig)
 - [ ] Combat
   - [ ] Action
     - [ ] MeleeAttackAction
